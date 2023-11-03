@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: tpch
+    schema: tpch
+    database: dipterv_db
+    tables:
+      - name: tpch_customer
+        identifier: tpch_customer
+      - name: tpch_lineitem
+        identifier: tpch_lineitem
+      - name: tpch_orders
+        identifier: tpch_orders
+      - name: tpch_nation
+        identifier: tpch_nation
+      - name: tpch_part
+        identifier: tpch_part
+      - name: tpch_partsupp
+        identifier: tpch_partsupp
+      - name: tpch_region
+        identifier: tpch_region
+      - name: tpch_supplier
+        identifier: tpch_supplier
