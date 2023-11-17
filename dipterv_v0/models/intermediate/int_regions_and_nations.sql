@@ -1,3 +1,5 @@
+-- int_regions_and_nations.sql
+
 with source as (
   select 
     n.nation_id,
