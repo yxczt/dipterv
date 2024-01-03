@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stg_tpcds__customer
+    description: "Staging table for the customer data from the TPCDS source."
+    columns:
+      - name: customer_sk
+        description: "Surrogate key for the customer, primary key."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Business natural key for the customer."
+      - name: first_name
+        description: "Customer's first name."
+      - name: last_name
+        description: "Customer's last name."
+      - name: email_address
+        description: "Customer's email address."
+      - name: preferred_customer_flag
+        description: "Flag indicating if the customer is preferred."
+      - name: birth_country
+        description: "Country where the customer was born."
+      - name: login
+        description: "Customer's login."
+      - name: last_review_date_sk
+        description: "Date surrogate key for the customer's last review."
+      - name: current_cdemo_sk
+        description: "Current demographic surrogate key for the customer."
+      - name: current_hdemo_sk
+        description: "Current household demographic surrogate key for the customer."
+      - name: current_addr_sk
+        description: "Current address surrogate key for the customer."
+      - name: first_shipto_date_sk
+        description: "Date surrogate key for the customer's first ship-to."
+      - name: first_sales_date_sk
+        description: "Date surrogate key for the customer's first sales date."
+      - name: birth_day
+        description: "Day of birth for the customer."
+      - name: birth_month
+        description: "Month of birth for the customer."
+      - name: birth_year
+        description: "Year of birth for the customer."
+      - name: salutation
+        description: "Salutation for the customer."
