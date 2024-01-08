@@ -1,11 +1,10 @@
 {% set relations = [] %}
-{% for node in graph.nodes.values() %}
-    {%- do relations.append(ref(node.name)) -%}
-    depends_on: {{ "ref('" + node.name + "')" }}
-{% endfor %}
 with
+{% for node in graph.sources.values() %}
+    {%- do relations.append(source(node.source_name, node.name)) -%}
+{% endfor %}
 {% for relation in relations %}
-    {{relation.schema}}_{{relation.identifier}}_resource_data as (
+    {{relation.schema}}_{{relation.identifier}}_source_data as (
         select * from {{ relation }}
     ),
     {% set information_schema_columns = run_query(dbt_profiler.select_from_information_schema_columns(relation)) %}
@@ -22,7 +21,7 @@ with
         {{relation.schema}}_{{relation.identifier}}_{{column_name}}_data as (
         {% set data_type = data_type_map.get(column_name.lower(), "") %}
         select
-            '{{relation.schema}}.{{relation.identifier}}' as resource,
+            '{{relation.schema}}.{{relation.identifier}}' as source,
             '{{ column_name }}' as column_name,
             nullif('{{ data_type }}', '') as data_type,
             {{ dbt_profiler.measure_row_count(column_name, data_type) }} as row_count,
@@ -37,7 +36,7 @@ with
             {{ dbt_profiler.measure_std_dev_population(column_name, data_type) }} as std_dev_population,
             {{ dbt_profiler.measure_std_dev_sample(column_name, data_type) }} as std_dev_sample,
             cast(current_timestamp as {{ dbt_profiler.type_string() }}) as profiled_at
-        from {{relation.schema}}_{{relation.identifier}}_resource_data
+        from {{relation.schema}}_{{relation.identifier}}_source_data
         ){% if not loop.last %},{% endif %}
 
     {% endfor %}
