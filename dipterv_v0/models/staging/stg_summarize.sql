@@ -1,10 +1,10 @@
-{%- for node in graph.nodes.values() -%}
-    -- depends_on: {{ref(node.name)}}
-{% endfor %}
 {%- set relations = [] -%}
 with
 {% for node in graph.nodes.values() %}
-    {%- do relations.append(ref(node.name)) -%}
+    {% if node.alias not in ['src_summarize', 'stg_summarize', 'testtest', 'stg_test', 'int_test']%}
+        {% set relation = api.Relation.create(database=this.database, schema=this.schema, identifier=node.alias) %}
+        {%- do relations.append(relation) -%}
+    {% endif %}
 {% endfor %}
 {% for relation in relations %}
     {{relation.schema}}_{{relation.identifier}}_resource_data as (
