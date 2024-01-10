@@ -1,9 +1,11 @@
-{% set relations = [] %}
+{%- for node in graph.nodes.values() -%}
+    -- depends_on: {{ref(node.name)}}
+{% endfor %}
+{%- set relations = [] -%}
+with
 {% for node in graph.nodes.values() %}
     {%- do relations.append(ref(node.name)) -%}
-    depends_on: {{ "ref('" + node.name + "')" }}
 {% endfor %}
-with
 {% for relation in relations %}
     {{relation.schema}}_{{relation.identifier}}_resource_data as (
         select * from {{ relation }}
