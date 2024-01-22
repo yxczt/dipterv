@@ -1,45 +1,82 @@
-version: 2
+version 2:
 
 models:
-  - name: stg_tpcds__customer
-    description: "Staging table for the customer data from the TPCDS source."
+  stg_tpcds_customer
+  - name: stg_tpcds_customer
+    description: "The staging model for TPC-DS customers."
     columns:
       - name: customer_sk
-        description: "Surrogate key for the customer, primary key."
+        description: "Unique identifier for a customer."
         tests:
           - unique
           - not_null
+          
       - name: customer_id
-        description: "Business natural key for the customer."
+        description: "Business-facing identifier for the customer, unique."
+        tests:
+          - unique
+          - not_null
+          
       - name: first_name
         description: "Customer's first name."
+        tests:
+          - not_null
+
       - name: last_name
         description: "Customer's last name."
+
       - name: email_address
         description: "Customer's email address."
+        tests:
+          - not_null
+
       - name: preferred_customer_flag
-        description: "Flag indicating if the customer is preferred."
+        description: "Flag indicating if a customer is preferred."
+        tests:
+          - accepted_values:
+              values: ['N', 'Y']
+              quote: true
+
       - name: birth_country
         description: "Country where the customer was born."
+
       - name: login
-        description: "Customer's login."
+        description: "Customer's login information."
+
       - name: last_review_date_sk
-        description: "Date surrogate key for the customer's last review."
+        description: "Surrogate key for the date of the customer's last review."
+
       - name: current_cdemo_sk
         description: "Current demographic surrogate key for the customer."
+
       - name: current_hdemo_sk
         description: "Current household demographic surrogate key for the customer."
+
       - name: current_addr_sk
         description: "Current address surrogate key for the customer."
+        tests:
+          - not_null
+
       - name: first_shipto_date_sk
-        description: "Date surrogate key for the customer's first ship-to."
+        description: "Surrogate key for the date of the first shipment to the customer."
+
       - name: first_sales_date_sk
-        description: "Date surrogate key for the customer's first sales date."
+        description: "Surrogate key for the date of the first sale to the customer."
+
       - name: birth_day
-        description: "Day of birth for the customer."
+        description: "Day of birth of the customer."
+        tests:
+          - not_null
+
       - name: birth_month
-        description: "Month of birth for the customer."
+        description: "Month of birth of the customer."
+        tests:
+          - not_null
+
       - name: birth_year
-        description: "Year of birth for the customer."
+        description: "Year of birth of the customer."
+        tests:
+          - not_null
+
       - name: salutation
         description: "Salutation for the customer."
