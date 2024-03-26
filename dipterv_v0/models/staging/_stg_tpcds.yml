@@ -147,3 +147,227 @@ models:
         tests:
           - unique
           - not_null
+
+  - name: stg_tpcds__household_demographics
+    description: "The staging model for household demographics."
+    columns:
+      - name: household_demo_sk
+        description: "Household demographic surrogate key, primary key for the table."
+        tests:
+          - unique
+          - not_null
+      - name: income_band_sk
+        description: "Income band surrogate key, foreign key to income_band."
+        tests:
+          - relationships:
+              to: ref('stg_tpcds_income_band')
+              field: income_band_sk
+      - name: buy_potential
+        description: "Buying potential of the household."
+      - name: dependent_count
+        description: "Number of dependents in the household."
+        tests:
+          - not_null
+      - name: vehicle_count
+        description: "Number of vehicles owned by the household."
+        tests:
+          - not_null
+
+  - name: stg_tpcds_catalog_page
+
+    description: "The staging model for catalog pages."
+    columns:
+      - name: catalog_page_sk
+        description: "Surrogate key for catalog pages, primary key."
+        tests:
+          - unique
+          - not_null
+      - name: catalog_page_id
+        description: "Id of a catalog page, unique identifier."
+        tests:
+          - unique
+          - not_null
+      - name: start_date_sk
+        description: "Surrogate key for the start date of a catalog page."
+        tests:
+          - not_null
+      - name: end_date_sk
+        description: "Surrogate key for the end date of a catalog page."
+      - name: department
+        description: "Department of the catalog page."
+        tests:
+          - not_null
+      - name: catalog_number
+        description: "Catalog number."
+        tests:
+          - not_null
+      - name: catalog_page_number
+        description: "Page number in the catalog."
+        tests:
+          - not_null
+      - name: description
+        description: "Description of the catalog page."
+        tests:
+          - not_null
+      - name: type
+        description: "Type of the catalog page."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['bi-annual', 'quarterly', 'monthly']
+              config:
+                severity: warn
+
+  - name: stg_tpcds_catalog_returns
+    description: "The staging model for catalog returns."
+    columns:
+      - name: returned_date_sk
+        description: "The surrogate key for the date the item was returned."
+        tests:
+          - not_null
+      - name: returned_time_sk
+        description: "The surrogate key for the time the item was returned."
+        tests:
+          - not_null
+      - name: item_sk
+        description: "The surrogate key for the item being returned."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_item')
+              field: item_sk
+      - name: refunded_customer_sk
+        description: "The surrogate key for the customer who was refunded."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_customer')
+              field: customer_sk
+      - name: refunded_cdemo_sk
+        description: "The surrogate key for the demographic information of the refunded customer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_customer_demographics')
+              field: demo_sk
+      - name: refunded_hdemo_sk
+        description: "The surrogate key for the household demographics of the refunded customer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_household_demographics')
+              field: household_demo_sk
+      - name: refunded_addr_sk
+        description: "The surrogate key for the address of the refunded customer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_customer_address')
+              field: address_sk
+      - name: returning_customer_sk
+        description: "The surrogate key for the customer who is returning the item."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_customer')
+              field: customer_sk
+      - name: returning_cdemo_sk
+        description: "The surrogate key for the demographic information of the returning customer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_customer_demographics')
+              field: demo_sk
+      - name: returning_hdemo_sk
+        description: "The surrogate key for the household demographics of the returning customer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_household_demographics')
+              field: household_demo_sk
+      - name: returning_addr_sk
+        description: "The surrogate key for the address of the returning customer."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_customer_address')
+              field: address_sk
+      - name: call_center_sk
+        description: "The surrogate key for the call center involved in the return."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_call_center')
+              field: call_center_sk
+      - name: catalog_page_sk
+        description: "The surrogate key for the catalog page from which the item was ordered."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_catalog_page')
+              field: catalog_page_sk
+      - name: ship_mode_sk
+        description: "The surrogate key for the shipping mode used for the return."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_ship_mode')
+              field: ship_mode_sk
+      - name: warehouse_sk
+        description: "The surrogate key for the warehouse from which the item was shipped."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_warehouse')
+              field: warehouse_sk
+      - name: reason_sk
+        description: "The surrogate key for the reason for the return."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_tpcds_reason')
+              field: reason_sk
+      - name: order_number
+        description: "The order number associated with the return."
+        tests:
+          - not_null
+      - name: return_quantity
+        description: "The quantity of items returned."
+        tests:
+          - not_null
+      - name: return_amt
+        description: "The amount refunded for the return."
+        tests:
+          - not_null
+      - name: return_tax
+        description: "The tax amount refunded for the return."
+        tests:
+          - not_null
+      - name: return_amt_inc_tax
+        description: "The total amount refunded including tax for the return."
+        tests:
+          - not_null
+      - name: fee
+        description: "Any fee associated with the return."
+        tests:
+          - not_null
+      - name: return_ship_cost
+        description: "The shipping cost refunded for the return."
+        tests:
+          - not_null
+      - name: refunded_cash
+        description: "The cash amount refunded for the return."
+        tests:
+          - not_null
+      - name: reversed_charge
+        description: "The charge that was reversed due to the return."
+        tests:
+          - not_null
+      - name: account_credit
+        description: "The credit to the customer's account due to the return."
+        tests:
+          - not_null
+      - name: net_loss
+        description: "The net loss to the company due to the return."
+        tests:
+          - not_null
