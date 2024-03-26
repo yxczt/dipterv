@@ -1,7 +1,7 @@
 {%- set relations = [] -%}
 with
 {% for node in graph.nodes.values() %}
-    {% if node.alias not in ['stg_summarize', 'stg_test'] and node.alias.startswith('stg_')%}
+    {% if node.alias not in ['mart_summarize', 'mart_test'] and node.alias.startswith('mart_')%}
         {% set relation = api.Relation.create(database=this.database, schema=this.schema, identifier=node.alias) %}
         {%- do relations.append(relation) -%}
     {% endif %}
