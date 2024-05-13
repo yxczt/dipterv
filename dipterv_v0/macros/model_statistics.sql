@@ -28,7 +28,7 @@
                 {{relation.schema}}_{{relation.identifier}}_{{column_name}}_data as (
                 {% set data_type = data_type_map.get(column_name.lower(), "") %}
                 select
-                    '{{relation.schema}}.{{relation.identifier}}' as resource,
+                    '{{relation.identifier}}' as resource,
                     '{{ column_name }}' as column_name,
                     nullif('{{ data_type }}', '') as data_type,
                     {{ dbt_profiler.measure_row_count(column_name, data_type) }} as row_count,
@@ -40,8 +40,6 @@
                     cast(max({{ adapter.quote(column_name) }}) as {{ dbt_profiler.type_string() }}) as max,
                     {{ dbt_profiler.measure_avg(column_name, data_type) }} as avg,
                     cast(median({{ adapter.quote(column_name) }}) as {{ dbt_profiler.type_string() }}) as median,
-                    {{ dbt_profiler.measure_std_dev_population(column_name, data_type) }} as std_dev_population,
-                    {{ dbt_profiler.measure_std_dev_sample(column_name, data_type) }} as std_dev_sample,
                     cast(current_timestamp as {{ dbt_profiler.type_string() }}) as profiled_at
                 from {{relation.schema}}_{{relation.identifier}}_resource_data
                 ){% if not loop.last %},{% endif %}
