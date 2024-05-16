@@ -326,3 +326,273 @@ orders_analyzed as (
 
 select * from orders_analyzed
 ```
+
+-- custom test for checking negative discount price in the model int_orders_aggregated
+
+```sql
+-- tests/generic/test_negative_discount_price.sql
+{% test negative_discount_price(model) %}
+
+    select
+        order_id,
+        total_discount_price
+    from {{ model }}
+    where total_discount_price < 0
+
+{% endtest %}
+```
+
+-- custom test for testing if the latest order date is later than or at the same time as first order date in int_customer_ordering_habits
+
+--tests/generic/test_latest_order_date_is_later_or_equal_to_first_order_date.sql
+{# {% test test_latest_order_date_is_later_or_equal_to_first_order_date(model) %}
+
+    select
+        customer_id,
+        first_order_date,
+        latest_order_date
+    from {{ model }}
+    where latest_order_date < first_order_date
+
+{% endtest %} #}
+
+-- custom test for checking if a customer's orders' revenue summarized is equal to a customer's generated revenue in int_revenue_per_customer
+
+-- tests/generic/test_customer_revenue_equality.sql
+{% test customer_revenue_equality(model) %}
+
+WITH customer_order_revenue AS (
+    SELECT
+        customer_id,
+        SUM(total_order_value) AS total_revenue_from_orders
+    FROM {{ ref('int_orders_aggregated') }}
+    GROUP BY customer_id
+),
+
+customer_revenue AS (
+    SELECT
+        customer_id,
+        total_revenue
+    FROM {{ ref('int_revenue_per_customer') }}
+)
+
+SELECT
+    c.customer_id,
+    c.total_revenue AS customer_total_revenue,
+    co.total_revenue_from_orders AS order_total_revenue
+FROM customer_revenue c
+LEFT JOIN customer_order_revenue co ON c.customer_id = co.customer_id
+WHERE c.total_revenue <> co.total_revenue_from_orders
+  OR co.total_revenue_from_orders IS NULL
+
+{% endtest %}
+
+-- custom test for checking if a customer's orders' order_total_price summarized in mart_orders, is equal to a customer's generated revenue in int_revenue_per_customer
+
+```sql
+with customer_orders as (
+    select
+        customer_id,
+        sum(total_price) as total_orders_price
+    from {{ ref('mart_orders') }}
+    group by customer_id
+),
+
+customer_revenue as (
+    select
+        customer_id,
+        total_revenue
+    from {{ ref('int_revenue_per_customer') }}
+)
+
+select
+    co.customer_id,
+    co.total_orders_price,
+    cr.total_revenue
+from customer_orders co
+join customer_revenue cr on co.customer_id = cr.customer_id
+where co.total_orders_price <> cr.total_revenue
+```
+```sql
+with customer_revenue_mart as (
+    select
+        customer_id,
+        sum(total_revenue) as total_revenue_mart
+    from {{ ref('mart_orders') }}
+    group by customer_id
+),
+
+customer_revenue_int as (
+    select
+        customer_id,
+        total_revenue as total_revenue_int
+    from {{ ref('int_revenue_per_customer') }}
+),
+
+revenue_comparison as (
+    select
+        crm.customer_id,
+        crm.total_revenue_mart,
+        cri.total_revenue_int,
+        case
+            when crm.total_revenue_mart = cri.total_revenue_int then 'Match'
+            else 'Mismatch'
+        end as revenue_status
+    from customer_revenue_mart crm
+    join customer_revenue_int cri
+    on crm.customer_id = cri.customer_id
+)
+
+select *
+from revenue_comparison
+where revenue_status = 'Mismatch'
+```
+```sql
+with customer_orders_revenue as (
+    select
+        c.customer_id,
+        sum(o.total_price) as total_orders_revenue
+    from {{ ref('mart_customers_orders_suppliers') }} o
+    join {{ ref('mart_customers') }} c on o.customer_id = c.customer_id
+    group by c.customer_id
+),
+customer_revenue as (
+    select
+        customer_id,
+        total_revenue
+    from {{ ref('int_revenue_per_customer') }}
+),
+revenue_comparison as (
+    select
+        co.customer_id,
+        co.total_orders_revenue,
+        cr.total_revenue,
+        case
+            when co.total_orders_revenue = cr.total_revenue then 'Match'
+            else 'Mismatch'
+        end as revenue_status
+    from customer_orders_revenue co
+    join customer_revenue cr on co.customer_id = cr.customer_id
+)
+select *
+from revenue_comparison
+where revenue_status = 'Mismatch'
+```
+
+```sql
+-- tests/generic/test_customer_revenue_equality.sql
+
+{% test customer_revenue_equality(model) %}
+
+with customer_orders_revenue as (
+    select
+        customer_id,
+        sum(total_order_value) as total_orders_revenue
+    from {{ model }}
+    group by customer_id
+),
+
+customer_revenue as (
+    select
+        customer_id,
+        total_revenue
+    from {{ model }}
+)
+
+select 
+    cor.customer_id,
+    cor.total_orders_revenue,
+    cr.total_revenue
+from customer_orders_revenue cor
+join customer_revenue cr
+on cor.customer_id = cr.customer_id
+where cor.total_orders_revenue != cr.total_revenue
+
+{% endtest %}
+```
+-- tests/generic/test_customer_order_revenue_equality.sql
+{% test customer_order_revenue_equality(model) %}
+
+with customer_orders_revenue as (
+    select
+        customer_id,
+        sum(total_order_value) as total_revenue_from_orders
+    from {{ model }}
+    group by customer_id
+),
+
+customer_revenue as (
+    select
+        customer_id,
+        total_revenue
+    from {{ model }}
+)
+
+select
+    co.customer_id,
+    co.total_revenue_from_orders,
+    cr.total_revenue
+from customer_orders_revenue co
+join customer_revenue cr
+    on co.customer_id = cr.customer_id
+where co.total_revenue_from_orders != cr.total_revenue
+
+{% endtest %}
+--tests/generic/test_customer_revenue_equality.sql
+{% test test_customer_revenue_equality(model) %}
+
+with customer_orders_revenue as (
+    select
+        customer_id,
+        sum(total_order_value) as total_revenue
+    from {{ model }}
+    group by customer_id
+),
+
+customer_revenue as (
+    select
+        customer_id,
+        total_revenue
+    from {{ model }}
+)
+
+select
+    co.customer_id,
+    co.total_revenue as orders_revenue,
+    cr.total_revenue as customer_revenue
+from customer_orders_revenue co
+join customer_revenue cr
+    on co.customer_id = cr.customer_id
+where co.total_revenue <> cr.total_revenue
+
+{% endtest %}
+-- tests/generic/test_customer_revenue_equality.sql
+{% test test_customer_revenue_equality(model) %}
+
+WITH customer_orders_revenue AS (
+    SELECT
+        customer_id,
+        SUM(total_price) AS total_orders_revenue
+    FROM {{ model }}
+    WHERE resource = 'int_customers_orders_analyzed'
+    GROUP BY customer_id
+),
+
+customer_revenue AS (
+    SELECT
+        customer_id,
+        total_revenue
+    FROM {{ model }}
+    WHERE resource = 'int_revenue_per_customer'
+)
+
+SELECT
+    co.customer_id,
+    co.total_orders_revenue,
+    cr.total_revenue
+FROM customer_orders_revenue co
+JOIN customer_revenue cr
+ON co.customer_id = cr.customer_id
+WHERE co.total_orders_revenue <> cr.total_revenue
+
+{% endtest %}

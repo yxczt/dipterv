@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: mart_orders
+    description: "A model for orders in the mart layer."
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Identifier for the customer who placed the order."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_customers_enriched')
+              field: customer_id
+      - name: order_status
+        description: "Status of the order."
+        tests:
+          - not_null
+      - name: order_total_price
+        description: "Total price of the order."
+        tests:
+          - not_null
+      - name: order_date
+        description: "Date when the order was placed."
+        tests:
+          - not_null
+      - name: order_priority
+        description: "Priority of the order."
+        tests:
+          - not_null
+      - name: customer_name
+        description: "Name of the customer who placed the order."
+        tests:
+          - not_null
+      - name: customer_account_balance
+        description: "Account balance of the customer who placed the order."
+        tests:
+          - not_null
+      - name: customer_nation
+        description: "Nation of the customer who placed the order."
+        tests:
+          - not_null
+      - name: customer_region_id
+        description: "Region ID of the customer who placed the order."
+        tests:
+          - not_null
+      - name: market_segment
+        description: "Market segment of the customer who placed the order."
+        tests:
+          - not_null
+      - name: supplier_id
+        description: "Identifier for the supplier of the order."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_suppliers_enriched')
+              field: supplier_id
+      - name: supplier_name
+        description: "Name of the supplier of the order."
+        tests:
+          - not_null
+      - name: supplier_nation
+        description: "Nation of the supplier of the order."
+        tests:
+          - not_null
+      - name: supplier_region_id
+        description: "Region ID of the supplier of the order."
+        tests:
+          - not_null
+      - name: supplier_account_balance
+        description: "Account balance of the supplier of the order."
+        tests:
+          - not_null
+      - name: lineitem_quantity
+        description: "Quantity of items in the line item of the order."
+        tests:
+          - not_null
+      - name: lineitem_extended_price
+        description: "Extended price of the line item in the order."
+        tests:
+          - not_null
+      - name: lineitem_discount
+        description: "Discount applied to the line item of the order."
+        tests:
+          - not_null
+      - name: lineitem_tax
+        description: "Tax applied to the line item of the order."
+        tests:
+          - not_null
