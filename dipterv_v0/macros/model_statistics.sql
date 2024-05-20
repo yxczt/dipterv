@@ -5,7 +5,7 @@
         {%- if regex != '' -%} {%- set has_prefix = true-%} {%- endif -%}
         with
         {% for node in graph.nodes.values() %}
-            {% if node.alias not in exclude and ((has_prefix and node.alias.startswith(prefix)) or node.alias in include)%}
+            {% if node.alias not in exclude and ((has_prefix and node.alias.startswith(prefix)) or node.alias in include) and node.unique_id.startswith('model.' + var('default_package'))%}
                 {% set relation = api.Relation.create(database=database, schema=schema, identifier=node.alias) %}
                 {%- do relations.append(relation) -%}
             {% endif %}

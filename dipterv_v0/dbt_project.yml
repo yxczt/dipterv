@@ -33,13 +33,16 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   dipterv_v0:
     +materialized: table
-  dbt_project_evaluator:
-    +schema: dbt_project_evaluator
+#  dbt_project_evaluator:
+#    +schema: dbt_project_evaluator
 on-run-end: 
-  - 'create or replace table "{{ database }}"."{{ schema }}"."stg_summarize" as ({{model_statistics(prefix = "stg_", exclude = ["stg_summarize", "stg_test"], database = database, schema = schema)}});'
-  - 'create or replace table "{{ database }}"."{{ schema }}"."int_summarize" as ({{model_statistics(prefix = "int_", exclude = ["int_summarize", "int_test"], database = database, schema = schema)}});'
-  - 'create or replace table "{{ database }}"."{{ schema }}"."mart_summarize" as ({{model_statistics(prefix = "mart_", exclude = ["mart_summarize", "mart_test"], database = database, schema = schema)}});'
-  - 'commit;'
+#  - 'create or replace table "{{ database }}"."{{ schema }}"."stg_summarize" as ({{model_statistics(prefix = "stg_", exclude = ["stg_summarize", "stg_test"], database = database, schema = schema)}});'
+#  - 'create or replace table "{{ database }}"."{{ schema }}"."int_summarize" as ({{model_statistics(prefix = "int_", exclude = ["int_summarize", "int_test"], database = database, schema = schema)}});'
+#  - 'create or replace table "{{ database }}"."{{ schema }}"."mart_summarize" as ({{model_statistics(prefix = "mart_", exclude = ["mart_summarize", "mart_test"], database = database, schema = schema)}});'
+#  - 'commit;'
+
+vars:
+  default_package: dipterv_v0
 
 dispatch:
   - macro_namespace: dbt
