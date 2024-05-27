@@ -1,0 +1,559 @@
+version: 2
+
+models:
+
+  - name: stg_web_sales
+    description: "Staging model for web sales."
+    columns:
+      - name: ws_sold_date_sk
+        description: "The surrogate key for the sale date."
+        tests:
+          - not_null
+      - name: ws_sold_time_sk
+        description: "The surrogate key for the sale time."
+        tests:
+          - not_null
+      - name: ws_ship_date_sk
+        description: "The surrogate key for the ship date."
+        tests:
+          - not_null
+      - name: ws_item_sk
+        description: "The surrogate key for the item sold."
+        tests:
+          - not_null
+      - name: ws_bill_customer_sk
+        description: "The surrogate key for the billing customer."
+        tests:
+          - not_null
+      - name: ws_bill_cdemo_sk
+        description: "The surrogate key for the demographic information of the billing customer."
+        tests:
+          - not_null
+      - name: ws_bill_hdemo_sk
+        description: "The surrogate key for the household demographics of the billing customer."
+        tests:
+          - not_null
+      - name: ws_bill_addr_sk
+        description: "The surrogate key for the billing address."
+        tests:
+          - not_null
+      - name: ws_ship_customer_sk
+        description: "The surrogate key for the shipping customer."
+        tests:
+          - not_null
+      - name: ws_ship_cdemo_sk
+        description: "The surrogate key for the demographic information of the shipping customer."
+        tests:
+          - not_null
+      - name: ws_ship_hdemo_sk
+        description: "The surrogate key for the household demographics of the shipping customer."
+        tests:
+          - not_null
+      - name: ws_ship_addr_sk
+        description: "The surrogate key for the shipping address."
+        tests:
+          - not_null
+      - name: ws_web_page_sk
+        description: "The surrogate key for the web page involved in the sale."
+        tests:
+          - not_null
+      - name: ws_web_site_sk
+        description: "The surrogate key for the web site involved in the sale."
+        tests:
+          - not_null
+      - name: ws_ship_mode_sk
+        description: "The surrogate key for the shipping mode."
+        tests:
+          - not_null
+      - name: ws_warehouse_sk
+        description: "The surrogate key for the warehouse."
+        tests:
+          - not_null
+      - name: ws_promo_sk
+        description: "The surrogate key for the promotion applied to the sale."
+        tests:
+          - not_null
+      - name: ws_order_number
+        description: "The order number for the web sale."
+        tests:
+          - not_null
+          - unique
+      - name: ws_quantity
+        description: "The quantity of items sold in the web sale."
+        tests:
+          - not_null
+      - name: ws_wholesale_cost
+        description: "The wholesale cost of the items sold."
+        tests:
+          - not_null
+      - name: ws_list_price
+        description: "The list price of the items sold."
+        tests:
+          - not_null
+      - name: ws_sales_price
+        description: "The sales price of the items sold."
+        tests:
+          - not_null
+      - name: ws_ext_discount_amt
+        description: "The extended discount amount for the items sold."
+        tests:
+          - not_null
+      - name: ws_ext_sales_price
+        description: "The extended sales price for the items sold."
+        tests:
+          - not_null
+      - name: ws_ext_wholesale_cost
+        description: "The extended wholesale cost for the items sold."
+        tests:
+          - not_null
+      - name: ws_ext_list_price
+        description: "The extended list price for the items sold."
+        tests:
+          - not_null
+      - name: ws_ext_tax
+        description: "The extended tax for the items sold."
+        tests:
+          - not_null
+      - name: ws_coupon_amt
+        description: "The coupon amount for the items sold."
+        tests:
+          - not_null
+      - name: ws_ext_ship_cost
+        description: "The extended shipping cost for the items sold."
+        tests:
+          - not_null
+      - name: ws_net_paid
+        description: "The net amount paid for the items sold."
+        tests:
+          - not_null
+      - name: ws_net_paid_inc_tax
+        description: "The net amount paid including tax for the items sold."
+        tests:
+          - not_null
+      - name: ws_net_paid_inc_ship
+        description: "The net amount paid including shipping for the items sold."
+        tests:
+          - not_null
+      - name: ws_net_paid_inc_ship_tax
+        description: "The net amount paid including shipping and tax for the items sold."
+        tests:
+          - not_null
+      - name: ws_net_profit
+        description: "The net profit from the web sale."
+        tests:
+          - not_null
+  - name: stg_item
+    description: "Staging model for item data."
+    columns:
+      - name: item_sk
+        description: "Unique identifier for each item."
+        tests:
+          - unique
+          - not_null
+      - name: item_id
+        description: "Item ID."
+        tests:
+          - unique
+          - not_null
+      - name: rec_start_date
+        description: "Record start date."
+        tests:
+          - not_null
+      - name: rec_end_date
+        description: "Record end date."
+      - name: item_desc
+        description: "Description of the item."
+      - name: current_price
+        description: "Current price of the item."
+      - name: wholesale_cost
+        description: "Wholesale cost of the item."
+      - name: brand_id
+        description: "Identifier for the brand."
+        tests:
+          - not_null
+      - name: brand
+        description: "Name of the brand."
+      - name: class_id
+        description: "Identifier for the item class."
+        tests:
+          - not_null
+      - name: class
+        description: "Name of the item class."
+      - name: category_id
+        description: "Identifier for the item category."
+        tests:
+          - not_null
+      - name: category
+        description: "Name of the item category."
+      - name: manufact_id
+        description: "Identifier for the manufacturer."
+        tests:
+          - not_null
+      - name: manufact
+        description: "Name of the manufacturer."
+      - name: size
+        description: "Size of the item."
+      - name: formulation
+        description: "Formulation of the item."
+      - name: color
+        description: "Color of the item."
+      - name: units
+        description: "Units in which the item is measured."
+      - name: container
+        description: "Type of container in which the item is packaged."
+      - name: manager_id
+        description: "Identifier for the managing personnel."
+        tests:
+          - not_null
+      - name: product_name
+        description: "Name of the product."
+        tests:
+          - not_null
+  - name: stg_customer
+    description: "Staging model for customer data."
+    columns:
+      - name: customer_sk
+        description: "Unique identifier for a customer."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Customer ID."
+        tests:
+          - unique
+          - not_null
+      - name: current_cdemo_sk
+        description: "Current demographic snapshot key of the customer."
+      - name: current_hdemo_sk
+        description: "Current household demographic snapshot key of the customer."
+      - name: current_addr_sk
+        description: "Current address key of the customer."
+        tests:
+          - not_null
+      - name: first_shipto_date_sk
+        description: "Date key for the first shipment to the customer."
+      - name: first_sales_date_sk
+        description: "Date key for the first sale to the customer."
+      - name: salutation
+        description: "Salutation of the customer."
+      - name: first_name
+        description: "First name of the customer."
+      - name: last_name
+        description: "Last name of the customer."
+      - name: preferred_cust_flag
+        description: "Flag indicating if the customer is a preferred customer."
+      - name: birth_day
+        description: "Birth day of the customer."
+      - name: birth_month
+        description: "Birth month of the customer."
+      - name: birth_year
+        description: "Birth year of the customer."
+      - name: birth_country
+        description: "Country of birth of the customer."
+      - name: login
+        description: "Login information of the customer."
+      - name: email_address
+        description: "Email address of the customer."
+        tests:
+          - not_null
+      - name: last_review_date_sk
+        description: "Date key for the last review made by the customer."
+
+  - name: int_ordering_habits_per_nation
+    description: "Intermediate model for analyzing ordering habits per nation."
+    columns:
+      - name: nation
+        description: "Identifier for the nation."
+        tests:
+          - not_null
+          - unique
+      - name: year
+        description: "The year of the order."
+        tests:
+          - not_null
+      - name: month
+        description: "The month of the order."
+        tests:
+          - not_null
+      - name: day
+        description: "The day of the order."
+        tests:
+          - not_null
+      - name: i_category
+        description: "Category of the item."
+        tests:
+          - not_null
+      - name: i_class
+        description: "Class of the item."
+        tests:
+          - not_null
+      - name: i_brand
+        description: "Brand of the item."
+        tests:
+          - not_null
+      - name: total_quantity
+        description: "Total quantity of items ordered."
+        tests:
+          - not_null
+      - name: total_net_paid
+        description: "Total net paid for the orders."
+        tests:
+          - not_null
+      - name: total_net_paid_inc_tax
+        description: "Total net paid including tax for the orders."
+        tests:
+          - not_null
+      - name: total_net_paid_inc_ship
+        description: "Total net paid including shipping for the orders."
+        tests:
+          - not_null
+      - name: total_net_paid_inc_ship_tax
+        description: "Total net paid including shipping and tax for the orders."
+        tests:
+          - not_null
+
+  - name: int_lineitem_sold_per_customer
+    columns:
+      - name: customer_id
+        description: "Unique identifier for customers."
+        tests:
+          - unique
+          - not_null
+      - name: ws_order_number
+        description: "Web sales order number."
+        tests:
+          - unique
+          - not_null
+      - name: item_id
+        description: "Unique identifier for items."
+        tests:
+          - not_null
+      - name: item_desc
+        description: "Description of the item."
+      - name: brand
+        description: "Brand of the item."
+      - name: class
+        description: "Class category of the item."
+      - name: category
+        description: "Category of the item."
+      - name: date
+        description: "Date of the sale."
+        tests:
+          - not_null
+      - name: ws_quantity
+        description: "Quantity of items sold in the web sale."
+        tests:
+          - not_null
+      - name: ws_wholesale_cost
+        description: "Wholesale cost of the item in the web sale."
+        tests:
+          - not_null
+      - name: ws_sales_price
+        description: "Sales price of the item in the web sale."
+        tests:
+          - not_null
+
+  - name: int_lineitem_revenue
+    description: "Intermediate model for line item revenue."
+    columns:
+      - name: city
+        description: "City associated with the revenue."
+        tests:
+          - not_null
+      - name: state
+        description: "State associated with the revenue."
+        tests:
+          - not_null
+      - name: country
+        description: "Country associated with the revenue."
+        tests:
+          - not_null
+      - name: max_revenue
+        description: "Maximum revenue from line items."
+        tests:
+          - not_null
+  - name: int_item_sold_by_month
+    columns:
+      - name: year
+        description: "The year when the item was sold."
+        tests:
+          - not_null
+      - name: month_seq
+        description: "Sequential identifier for the month within the dataset's timeline."
+        tests:
+          - not_null
+      - name: item_id
+        description: "Unique identifier of the item."
+        tests:
+          - not_null
+          - unique
+      - name: item_desc
+        description: "Description of the item."
+        tests:
+          - not_null
+      - name: total_quantity_sold
+        description: "The total quantity of the item sold."
+        tests:
+          - not_null
+
+  - name: int_avg_revenue_per_customer_order
+    columns:
+      - name: customer_sk
+        description: "Unique identifier for a customer."
+        tests:
+          - unique
+          - not_null
+      - name: avg_revenue_per_order
+        description: "Average revenue generated per customer order."
+        tests:
+          - not_null
+
+  - name: mart_sold_items_by_region_with_date
+    description: "This model provides the sold items by region with date and includes revenue information."
+    columns:
+      - name: region
+        description: "The region identifier where the items were sold."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "The customer identifier for the sold items."
+        tests:
+          - not_null
+          - unique
+
+      - name: lineitems_bought
+        description: "The total number of line items bought by the customer."
+        tests:
+          - not_null
+
+      - name: max_revenue_per_customer
+        description: "The maximum revenue generated per customer."
+        tests:
+          - not_null
+  - name: mart_order_revenue
+    columns:
+      - name: city
+        description: "The city where the order was placed."
+        tests:
+          - unique
+      - name: state
+        description: "The state where the order was placed."
+        tests:
+          - unique
+      - name: country
+        description: "The country where the order was placed."
+        tests:
+          - unique
+      - name: max_revenue
+        description: "The maximum revenue generated from an order."
+        tests:
+          - unique
+      - name: nation
+        description: "The nation where the order was placed."
+        tests:
+          - unique
+      - name: year
+        description: "The year when the order was placed."
+        tests:
+          - unique
+      - name: month
+        description: "The month when the order was placed."
+        tests:
+          - unique
+      - name: day
+        description: "The day when the order was placed."
+        tests:
+          - unique
+      - name: i_category
+        description: "The category of the item ordered."
+        tests:
+          - unique
+      - name: i_class
+        description: "The class of the item ordered."
+        tests:
+          - unique
+      - name: i_brand
+        description: "The brand of the item ordered."
+        tests:
+          - unique
+      - name: total_quantity
+        description: "The total quantity of items ordered."
+        tests:
+          - unique
+      - name: total_net_paid
+        description: "The total net amount paid for the order."
+        tests:
+          - unique
+      - name: total_net_paid_inc_tax
+        description: "The total net amount paid including tax for the order."
+        tests:
+          - unique
+      - name: total_net_paid_inc_ship
+        description: "The total net amount paid including shipping for the order."
+        tests:
+          - unique
+      - name: total_net_paid_inc_ship_tax
+        description: "The total net amount paid including shipping and tax for the order."
+        tests:
+          - unique
+  - name: mart_customer_data
+    description: "Model for customer data in the mart layer."
+    columns:
+      - name: nation
+        description: "Nation identifier as varchar."
+        tests:
+          - not_null
+      - name: year
+        description: "Year of the transaction."
+        tests:
+          - not_null
+      - name: month
+        description: "Month of the transaction."
+        tests:
+          - not_null
+      - name: day
+        description: "Day of the transaction."
+        tests:
+          - not_null
+      - name: i_category
+        description: "Item category."
+        tests:
+          - not_null
+      - name: i_class
+        description: "Item class."
+        tests:
+          - not_null
+      - name: i_brand
+        description: "Item brand."
+        tests:
+          - not_null
+      - name: total_quantity
+        description: "Total quantity of items."
+        tests:
+          - not_null
+      - name: total_net_paid
+        description: "Total net paid amount."
+        tests:
+          - not_null
+      - name: total_net_paid_inc_tax
+        description: "Total net paid including tax."
+        tests:
+          - not_null
+      - name: total_net_paid_inc_ship
+        description: "Total net paid including shipping."
+        tests:
+          - not_null
+      - name: total_net_paid_inc_ship_tax
+        description: "Total net paid including shipping and tax."
+        tests:
+          - not_null
+      - name: city
+        description: "City of the transaction."
+      - name: state
+        description: "State of the transaction."
+      - name: country
+        description: "Country of the transaction."
+      - name: max_revenue
+        description: "Maximum revenue from a customer."

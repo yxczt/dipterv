@@ -1,0 +1,195 @@
+version: 2
+
+models:
+
+  - name: stg_customer_copilot
+    description: This table contains staged customer data for the Copilot project.
+    columns:
+      - name: c_customer_sk
+        description: The surrogate key for the customer.
+        tests:
+          - not_null
+          - unique
+      - name: c_current_cdemo_sk
+        description: The current demographic surrogate key for the customer.
+        tests:
+          - not_null
+      - name: c_current_hdemo_sk
+        description: The current household demographic surrogate key for the customer.
+        tests:
+          - not_null
+
+  - name: stg_item_copilot
+    description: This table contains staged item data for the Copilot project.
+    columns:
+      - name: i_item_sk
+        description: The surrogate key for the item.
+        tests:
+          - not_null
+          - unique
+      - name: i_item_id
+        description: The ID of the item.
+        tests:
+          - not_null
+      - name: i_item_desc
+        description: The description of the item.
+        tests:
+          - not_null
+
+  - name: stg_web_sales_copilot
+    description: This table contains staged web sales data for the Copilot project.
+    columns:
+      - name: ws_web_page_sk
+        description: The surrogate key for the web page.
+        tests:
+          - not_null
+          - unique
+      - name: ws_sold_date_sk
+        description: The surrogate key for the date the item was sold.
+        tests:
+          - not_null
+      - name: ws_item_sk
+        description: The surrogate key for the item sold.
+        tests:
+          - not_null
+
+  - name: int_avg_revenue_per_customer_order_copilot
+    description: This table contains the average revenue per customer order.
+    columns:
+      - name: customer_id
+        description: The ID of the customer.
+        tests:
+          - not_null
+          - unique
+      - name: avg_revenue_per_customer_order
+        description: The average revenue per customer order.
+        tests:
+          - not_null
+
+  - name: int_item_sold_by_month_copilot
+    description: This table contains the number of items sold by month.
+    columns:
+      - name: month
+        description: The month in which the items were sold.
+        tests:
+          - not_null
+          - unique
+      - name: items_sold
+        description: The number of items sold.
+        tests:
+          - not_null
+
+  - name: int_lineitem_revenue_copilot
+    description: This table contains the maximum revenue per customer by region.
+    columns:
+      - name: region
+        description: The region of the customer.
+        tests:
+          - not_null
+          - unique
+      - name: max_revenue_per_customer
+        description: The maximum revenue per customer in the region.
+        tests:
+          - not_null
+
+  - name: int_lineitem_sold_per_customer_copilot
+    description: This table contains the number of line items bought per customer.
+    columns:
+      - name: customer_id
+        description: The ID of the customer.
+        tests:
+          - not_null
+          - unique
+      - name: lineitems_bought
+        description: The number of line items bought by the customer.
+        tests:
+          - not_null
+
+  - name: int_ordering_habits_per_nation_copilot
+    description: This table contains the total orders and total revenue per nation.
+    columns:
+      - name: nation
+        description: The nation of the customer.
+        tests:
+          - not_null
+          - unique
+      - name: total_orders
+        description: The total number of orders from the nation.
+        tests:
+          - not_null
+      - name: total_revenue
+        description: The total revenue from the nation.
+        tests:
+          - not_null
+
+  - name: mart_customer_data_copilot
+    description: This table contains various customer data by nations and regions.
+    columns:
+      - name: nation
+        description: The nation of the customer.
+        tests:
+          - not_null
+      - name: region
+        description: The region of the customer.
+        tests:
+          - not_null
+      - name: total_customers
+        description: The total number of customers.
+        tests:
+          - not_null
+      - name: distinct_salutations
+        description: The number of distinct salutations.
+        tests:
+          - not_null
+      - name: avg_birth_year
+        description: The average birth year of customers.
+        tests:
+          - not_null
+      - name: distinct_birth_countries
+        description: The number of distinct birth countries.
+        tests:
+          - not_null
+      - name: distinct_logins
+        description: The number of distinct logins.
+        tests:
+          - not_null
+      - name: distinct_email_addresses
+        description: The number of distinct email addresses.
+        tests:
+          - not_null
+
+  - name: mart_order_revenue_copilot
+    description: This table contains the total revenue for each customer and item per month.
+    columns:
+      - name: customer_id
+        description: The ID of the customer.
+        tests:
+          - not_null
+      - name: item_id
+        description: The ID of the item.
+        tests:
+          - not_null
+      - name: month
+        description: The month in which the items were sold.
+        tests:
+          - not_null
+      - name: total_revenue
+        description: The total revenue from the customer and item in the month.
+        tests:
+          - not_null
+
+  - name: mart_sold_items_by_region_with_date_copilot
+    description: This table contains the number of items sold by region and month.
+    columns:
+      - name: region
+        description: The region where the items were sold.
+        tests:
+          - not_null
+      - name: month
+        description: The month in which the items were sold.
+        tests:
+          - not_null
+      - name: items_sold
+        description: The number of items sold.
+        tests:
+          - not_null

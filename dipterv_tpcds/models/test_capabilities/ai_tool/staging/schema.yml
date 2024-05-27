@@ -1,0 +1,165 @@
+version: 2
+
+models:
+  - name: stg_customer
+    description: "staging model for tpcds customer"
+    columns:
+      - name: customer_sk
+        description: "Surrogate key for customer"
+      - name: customer_id
+        description: "Customer identifier"
+      - name: current_cdemo_sk
+        description: "Current demographic surrogate key"
+      - name: current_hdemo_sk
+        description: "Current household demographic surrogate key"
+      - name: current_addr_sk
+        description: "Current address surrogate key"
+      - name: first_shipto_date_sk
+        description: "Surrogate key for the first ship-to date"
+      - name: first_sales_date_sk
+        description: "Surrogate key for the first sales date"
+      - name: salutation
+        description: "Salutation of the customer"
+      - name: first_name
+        description: "First name of the customer"
+      - name: last_name
+        description: "Last name of the customer"
+      - name: preferred_cust_flag
+        description: "Flag indicating if the customer is a preferred customer"
+      - name: birth_day
+        description: "Birth day of the customer"
+      - name: birth_month
+        description: "Birth month of the customer"
+      - name: birth_year
+        description: "Birth year of the customer"
+      - name: birth_country
+        description: "Birth country of the customer"
+      - name: login
+        description: "Login of the customer"
+      - name: email_address
+        description: "Email address of the customer"
+      - name: last_review_date_sk
+        description: "Surrogate key for the last review date"
+
+
+  - name: stg_item
+    description: "staging model for tpcds item"
+    columns:
+      - name: item_sk
+        description: "Surrogate key for item"
+      - name: item_id
+        description: "Item identifier"
+      - name: rec_start_date
+        description: "Record start date"
+      - name: rec_end_date
+        description: "Record end date"
+      - name: item_desc
+        description: "Item description"
+      - name: current_price
+        description: "Current price of the item"
+      - name: wholesale_cost
+        description: "Wholesale cost of the item"
+      - name: brand_id
+        description: "Brand identifier"
+      - name: brand
+        description: "Brand name"
+      - name: class_id
+        description: "Class identifier"
+      - name: class
+        description: "Class name"
+      - name: category_id
+        description: "Category identifier"
+      - name: category
+        description: "Category name"
+      - name: manufact_id
+        description: "Manufacturer identifier"
+      - name: manufact
+        description: "Manufacturer name"
+      - name: size
+        description: "Size of the item"
+      - name: formulation
+        description: "Formulation of the item"
+      - name: color
+        description: "Color of the item"
+      - name: units
+        description: "Units of measurement"
+      - name: container
+        description: "Container type"
+      - name: manager_id
+        description: "Manager identifier"
+      - name: product_name
+        description: "Product name"
+
+
+  - name: stg_web_sales
+    description: "staging model for tpcds web_sales"
+    columns:
+      - name: ws_sold_date_sk
+        description: "Unique identifier for the sold date"
+      - name: ws_sold_time_sk
+        description: "Unique identifier for the sold time"
+      - name: ws_ship_date_sk
+        description: "Unique identifier for the ship date"
+      - name: ws_item_sk
+        description: "Unique identifier for the item"
+      - name: ws_bill_customer_sk
+        description: "Unique identifier for the billing customer"
+      - name: ws_bill_cdemo_sk
+        description: "Unique identifier for the customer demographic (billing)"
+      - name: ws_bill_hdemo_sk
+        description: "Unique identifier for the household demographic (billing)"
+      - name: ws_bill_addr_sk
+        description: "Unique identifier for the billing address"
+      - name: ws_ship_customer_sk
+        description: "Unique identifier for the shipping customer"
+      - name: ws_ship_cdemo_sk
+        description: "Unique identifier for the customer demographic (shipping)"
+      - name: ws_ship_hdemo_sk
+        description: "Unique identifier for the household demographic (shipping)"
+      - name: ws_ship_addr_sk
+        description: "Unique identifier for the shipping address"
+      - name: ws_web_page_sk
+        description: "Unique identifier for the web page"
+      - name: ws_web_site_sk
+        description: "Unique identifier for the web site"
+      - name: ws_ship_mode_sk
+        description: "Unique identifier for the shipping mode"
+      - name: ws_warehouse_sk
+        description: "Unique identifier for the warehouse"
+      - name: ws_promo_sk
+        description: "Unique identifier for the promotion"
+      - name: ws_order_number
+        description: "The order number"
+      - name: ws_quantity
+        description: "Quantity of items in the order"
+      - name: ws_wholesale_cost
+        description: "Wholesale cost of the order"
+      - name: ws_list_price
+        description: "List price of the order"
+      - name: ws_sales_price
+        description: "Sales price of the order"
+      - name: ws_ext_discount_amt
+        description: "Extended discount amount"
+      - name: ws_ext_sales_price
+        description: "Extended sales price"
+      - name: ws_ext_wholesale_cost
+        description: "Extended wholesale cost"
+      - name: ws_ext_list_price
+        description: "Extended list price"
+      - name: ws_ext_tax
+        description: "Extended tax amount"
+      - name: ws_coupon_amt
+        description: "Coupon amount"
+      - name: ws_ext_ship_cost
+        description: "Extended shipping cost"
+      - name: ws_net_paid
+        description: "Net amount paid"
+      - name: ws_net_paid_inc_tax
+        description: "Net amount paid including tax"
+      - name: ws_net_paid_inc_ship
+        description: "Net amount paid including shipping"
+      - name: ws_net_paid_inc_ship_tax
+        description: "Net amount paid including shipping and tax"
+      - name: ws_net_profit
+        description: "Net profit"
+
