@@ -1,0 +1,137 @@
+version: 2
+
+models:
+  - name: mart_customer_data
+    description: "Customer data by nations and regions with various dimensions"
+    columns:
+      - name: customer_id
+        description: "Unique identifier for the customer"
+      - name: customer_name
+        description: "Name of the customer"
+      - name: customer_address
+        description: "Address of the customer"
+      - name: nation_id
+        description: "Identifier for the nation the customer is from"
+      - name: customer_phone
+        description: "Phone number of the customer"
+      - name: account_balance
+        description: "Account balance of the customer"
+      - name: market_segment
+        description: "Market segment the customer belongs to"
+      - name: customer_comment
+        description: "Comments related to the customer"
+      - name: nation_name
+        description: "Name of the nation the customer is from"
+      - name: region_id
+        description: "Identifier for the region the nation belongs to"
+      - name: region_name
+        description: "Name of the region"
+    tests:
+      - unique:
+          column_name: customer_id
+      - not_null:
+          column_name: customer_id
+      - not_null:
+          column_name: customer_name
+      - not_null:
+          column_name: nation_id
+
+
+  - name: mart_order_revenue
+    description: "order revenue for analytical purposes by various dimensions"
+    columns:
+      - name: order_id
+        description: "Unique identifier for the order"
+      - name: customer_id
+        description: "Unique identifier for the customer"
+        tests:
+          - not_null
+          - unique
+      - name: order_status
+        description: "The status of the order"
+      - name: total_price
+        description: "Total price of the order"
+        tests:
+          - not_null
+      - name: order_date
+        description: "The date when the order was placed"
+        tests:
+          - not_null
+      - name: order_priority
+        description: "Priority level of the order"
+      - name: ship_priority
+        description: "Shipping priority of the order"
+      - name: clerk
+        description: "The clerk who processed the order"
+      - name: order_comment
+        description: "Comments associated with the order"
+      - name: customer_name
+        description: "Name of the customer"
+      - name: nation_name
+        description: "Nation name of the customer"
+      - name: region_id
+        description: "Region identifier for the customer"
+
+
+  - name: mart_sold_parts_by_region_with_date
+    description: "sold parts by region with date with various dimensions"
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order"
+      - name: customer_id
+        description: "Unique identifier for each customer"
+      - name: order_status
+        description: "Status of the order"
+      - name: total_price
+        description: "Total price of the order"
+      - name: order_date
+        description: "Date when the order was placed"
+      - name: order_priority
+        description: "Priority level of the order"
+      - name: part_id
+        description: "Unique identifier for each part"
+      - name: part_name
+        description: "Name of the part"
+      - name: manufacturer
+        description: "Manufacturer of the part"
+      - name: brand
+        description: "Brand of the part"
+      - name: size
+        description: "Size of the part"
+      - name: container
+        description: "Container type of the part"
+      - name: quantity
+        description: "Quantity of the part ordered"
+      - name: extended_price
+        description: "Extended price of the part"
+      - name: discount
+        description: "Discount applied to the part"
+      - name: total_order_value
+        description: "Total value of the order"
+      - name: avg_item_value
+        description: "Average value per item in the order"
+      - name: earliest_order_date
+        description: "Earliest date of order in the dataset"
+      - name: latest_order_date
+        description: "Latest date of order in the dataset"
+      - name: unique_parts_ordered
+        description: "Number of unique parts ordered"
+      - name: total_quantity_ordered
+        description: "Total quantity of parts ordered"
+      - name: avg_price_per_part
+        description: "Average price per part"
+      - name: min_price_per_part
+        description: "Minimum price per part"
+      - name: max_price_per_part
+        description: "Maximum price per part"
+      - name: nation_id
+        description: "Unique identifier for each nation"
+      - name: nation_name
+        description: "Name of the nation"
+      - name: region_id
+        description: "Unique identifier for each region"
+      - name: region_name
+        description: "Name of the region"
+      - name: region_comment
+        description: "Comment on the region"
+

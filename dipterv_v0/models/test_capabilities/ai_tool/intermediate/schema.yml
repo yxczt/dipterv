@@ -1,0 +1,133 @@
+version: 2
+
+models:
+  - name: int_avg_revenue_per_customer_order
+    description: "average revenue per customer order"
+    columns:
+      - name: customer_id
+        description: "Unique identifier for the customer"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Name of the customer"
+      - name: avg_revenue_per_order
+        description: "Average revenue generated per order by a customer"
+        tests:
+          - not_null
+
+
+  - name: int_lineitem_revenue
+    description: "max revenue per customer by region"
+    columns:
+      - name: region_id
+        description: "The unique identifier for the region."
+        tests:
+          - not_null
+          - unique
+      - name: region_name
+        description: "The name of the region."
+        tests:
+          - not_null
+      - name: max_revenue_in_region
+        description: "The maximum revenue achieved by a customer in the region."
+        tests:
+          - not_null
+
+
+  - name: int_lineitem_sold_per_customer
+    description: "lineitems bought by customer"
+    columns:
+      - name: customer_id
+        description: "Unique identifier for the customer."
+      - name: customer_name
+        description: "Name of the customer."
+      - name: order_id
+        description: "Unique identifier for the order."
+        tests:
+          - unique
+          - not_null
+      - name: part_id
+        description: "Unique identifier for the part."
+      - name: quantity
+        description: "The quantity of the part ordered."
+      - name: extended_price
+        description: "The extended price of the line item."
+      - name: discount
+        description: "The discount applied to the line item."
+      - name: tax
+        description: "The tax applied to the line item."
+
+
+  - name: int_ordering_habits_per_nation
+    description: "Ordering habits by nation, including average orders, quantity ordered, total order value, item value per order, and number of customers per nation."
+    columns:
+      - name: nation_name
+        description: "The name of the nation for the customer."
+      - name: avg_total_orders
+        description: "The average total number of orders made by customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression: ">= 0"
+      - name: avg_total_quantity_ordered
+        description: "The average total quantity of items ordered by customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression:  ">= 0"
+      - name: avg_total_order_value
+        description: "The average total value of orders made by customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression:  ">= 0"
+      - name: avg_item_value_per_order
+        description: "The average value of items per order made by customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression:  ">= 0"
+      - name: number_of_customers
+        description: "The number of distinct customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression:  ">= 0"
+      - name: total_quantity_by_nation
+        description: "The total quantity of items ordered by customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression:  ">= 0"
+      - name: avg_quantity_by_nation
+        description: "The average quantity of items ordered per order by customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression:  ">= 0"
+      - name: total_orders_by_nation
+        description: "The total number of orders made by customers from this nation."
+        tests:
+          - dbt_utils.expression_is_true: 
+              expression:  ">= 0"
+
+
+  - name: int_parts_and_suppliers_by_region
+    description: "Parts and suppliers aggregated by region."
+    columns:
+      - name: region_id
+        description: "Unique identifier for the region."
+        tests:
+          - unique
+          - not_null
+      - name: region_name
+        description: "Name of the region."
+      - name: total_parts
+        description: "Total number of parts in the region."
+        tests:
+          - not_null
+      - name: total_suppliers
+        description: "Total number of suppliers in the region."
+        tests:
+          - not_null
+      - name: average_account_balance
+        description: "Average account balance of suppliers in the region."
+      - name: unique_brands_count
+        description: "Count of unique brands in the region."
+      - name: average_part_size
+        description: "Average size of parts in the region."
+

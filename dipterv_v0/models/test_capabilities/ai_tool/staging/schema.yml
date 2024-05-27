@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: stg_customer
+    description: "staging model for tpch customer"
+    columns:
+      - name: customer_key
+        description: "Unique identifier for each customer."
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Name of the customer."
+      - name: address
+        description: "Customer's address."
+      - name: nation_key
+        description: "Foreign key to the customer's nation."
+        tests:
+          - not_null
+      - name: phone
+        description: "Customer's phone number."
+      - name: account_balance
+        description: "Balance of the customer's account."
+      - name: market_segment
+        description: "Market segment the customer belongs to."
+      - name: comment
+        description: "Comments related to the customer."
+
+
+  - name: stg_orders
+    description: "staging model for orders"
+    columns:
+      - name: order_key
+        description: "Unique identifier for each order"
+      - name: customer_key
+        description: "Reference to the customer placing the order"
+      - name: order_status
+        description: "Current status of the order"
+      - name: total_price
+        description: "Total price of the order"
+      - name: order_date
+        description: "Date when the order was placed"
+      - name: order_priority
+        description: "Priority level of the order"
+      - name: ship_priority
+        description: "Shipping priority of the order"
+      - name: clerk
+        description: "Clerk who processed the order"
+      - name: comment
+        description: "Additional comments on the order"
+    tests:
+      - unique:
+          column_name: order_key
+      - not_null:
+          column_name: order_key
+      - not_null:
+          column_name: customer_key
+      - not_null:
+          column_name: order_status
+      - not_null:
+          column_name: total_price
+      - not_null:
+          column_name: order_date
+
+
+  - name: stg_part
+    description: "staging model for tpch part"
+    columns:
+      - name: part_key
+        description: "Unique identifier for parts."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Name of the part."
+      - name: manufacturer
+        description: "Manufacturer of the part."
+      - name: brand
+        description: "Brand of the part."
+      - name: type
+        description: "Type of the part."
+      - name: size
+        description: "Size of the part."
+        tests:
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      - name: container
+        description: "Container of the part."
+      - name: retail_price
+        description: "Retail price of the part."
+        tests:
+          - not_null
+      - name: comment
+        description: "Comment about the part."
+
