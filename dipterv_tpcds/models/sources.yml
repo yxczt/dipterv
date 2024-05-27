@@ -1,0 +1,56 @@
+version: 2
+
+sources:
+
+  - name: tpcds
+    schema: main
+    database: dipterv_db
+    tables:
+      - name: catalog_page
+        identifier: catalog_page
+      - name: ship_mode
+        identifier: ship_mode
+      - name: store_returns
+        identifier: store_returns
+      - name: store_sales
+        identifier: store_sales
+      - name: web_sales
+        identifier: web_sales
+      - name: catalog_sales
+        identifier: catalog_sales
+      - name: customer
+        identifier: customer
+      - name: customer_demographics
+        identifier: customer_demographics
+      - name: item
+        identifier: item
+      - name: time_dim
+        identifier: time_dim
+      - name: call_center
+        identifier: call_center
+      - name: household_demographics
+        identifier: household_demographics
+      - name: inventory
+        identifier: inventory
+      - name: web_returns
+        identifier: web_returns
+      - name: customer_address
+        identifier: customer_address
+      - name: store
+        identifier: store
+      - name: web_site
+        identifier: web_site
+      - name: date_dim
+        identifier: date_dim
+      - name: reason
+        identifier: reason
+      - name: warehouse
+        identifier: warehouse
+      - name: web_page
+        identifier: web_page
+      - name: catalog_returns
+        identifier: catalog_returns
+      - name: income_band
+        identifier: income_band
+      - name: promotion
+        identifier: promotion

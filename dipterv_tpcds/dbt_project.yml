@@ -2,12 +2,12 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'dipterv_v0'
+name: 'dipterv_tpcds'
 version: '1.0.0'
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'dipterv_v0'
+profile: 'dipterv_tpcds'
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -31,7 +31,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  dipterv_v0:
+  dipterv_tpcds:
     +materialized: table
   dbt_project_evaluator:
     +schema: dbt_project_evaluator
@@ -42,7 +42,7 @@ on-run-end:
 #  - 'commit;'
 
 vars:
-  default_package: dipterv_v0
+  default_package: dipterv_tpcds
 
 dispatch:
   - macro_namespace: dbt
